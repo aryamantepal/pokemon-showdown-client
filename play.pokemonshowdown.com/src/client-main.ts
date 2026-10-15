@@ -770,6 +770,13 @@ class PSUser extends PSStreamModel<PSLoginState | null> {
 	}
 	handleAssertion(name: string, assertion?: string | null) {
 		if (!assertion) {
+			// Our --no-security server: log in without the public login server
+			this.loggingIn = null;
+			PS.send(`/trn ${name},0,`);
+			this.update({success: true});
+			return;
+		}
+		if (!assertion) {
 			PS.alert(TL`Error logging in.`);
 			return;
 		}
