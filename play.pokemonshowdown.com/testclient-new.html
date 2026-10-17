@@ -92,7 +92,9 @@
 					Config.defaultserver = {
 						id: m[1],
 						host: m[2],
-						port: (m[3] && parseInt(m[3].substr(1))) || 8000
+						port: (m[3] && parseInt(m[3].substr(1))) || 8000,
+						// Served over https: a set httpport makes the client use wss
+						httpport: location.protocol === 'https:' ? 80 : undefined
 					};
 				} else {
 					alert('Unrecognised query string syntax: ' + location.search);
